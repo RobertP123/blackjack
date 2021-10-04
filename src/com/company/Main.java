@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -12,8 +14,27 @@ public class Main {
         }
         return card;
     }
+    static String getCardName(String[] cardNames, int cardnum, Random rand){
+        if (cardnum == 10){
+            int rannum = rand.nextInt(3);
+            if (rannum == 0){
+                cardnum = 12;
+            }
+            if (rannum == 1){
+                cardnum = 13;
+            }
+            if (rannum == 2){
+                cardnum = 14;
+            }
+        }
+        if (cardnum == 11){
+            cardnum = 15;
+        }
+        return cardNames[cardnum - 1];
+    }
 
     public static void main(String[] args) {
+        String[] cardNames = {"Ace1", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King", "Ace11"};
         Scanner sc = new Scanner(System.in);
         Random rand = new Random();
         System.out.println("welcome to blackjack");
@@ -25,7 +46,7 @@ public class Main {
             int playerCard1 = genCard(rand);
             int playerCard2 = genCard(rand);
             int playerHand = playerCard1 + playerCard2;
-            System.out.println("your cards are " + playerCard1 + " and " + playerCard2 + " they add up to " + playerHand);
+            System.out.println("your cards are " + getCardName(cardNames, playerCard1, rand) + " and " +getCardName(cardNames, playerCard2, rand) + " they add up to " + playerHand);
             while (cpuHand <= 16) {
                 System.out.println("the cpu takes a card");
                 int hit = genCard(rand);
@@ -43,7 +64,7 @@ public class Main {
                 if (yn.equals("y")) {
                     int hit = genCard(rand);
                     playerHand += hit;
-                    System.out.println("you got " + hit);
+                    System.out.println("you got " + getCardName(cardNames, hit, rand));
                     System.out.println("you now have " + playerHand);
                     if (playerHand > 21) {
                         System.out.println("you have gone bust!");
